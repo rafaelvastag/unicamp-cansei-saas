@@ -63,6 +63,14 @@ public class Pedido implements Serializable {
 		return soma;
 	}
 	
+	public double getValorTotalPontosCarbono() {
+		int soma = 0;
+		for (ItemPedido ip : itens) {
+			soma = soma + ip.getProduto().getCarbonoPontos();
+		}
+		return soma;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

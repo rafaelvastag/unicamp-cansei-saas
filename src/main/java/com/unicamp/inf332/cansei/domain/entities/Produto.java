@@ -18,27 +18,25 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Produto  implements Serializable {
+public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private Double preco;
-	
+	private int carbonoPontos;
+
 	@JsonIgnore
 	@ManyToMany
-	@JoinTable(name = "PRODUTO_CATEGORIA",
-		joinColumns = @JoinColumn(name = "produto_id"),
-		inverseJoinColumns = @JoinColumn(name = "categoria_id")
-	)
+	@JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private List<Categoria> categorias = new ArrayList<>();
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy="id.produto")
+	@OneToMany(mappedBy = "id.produto")
 	private Set<ItemPedido> itens = new HashSet<>();
-	
+
 	public Produto() {
 	}
 
@@ -57,8 +55,15 @@ public class Produto  implements Serializable {
 		}
 		return lista;
 	}
-	
-	
+
+	public int getCarbonoPontos() {
+		return carbonoPontos;
+	}
+
+	public void setCarbonoPontos(int carbonoPontos) {
+		this.carbonoPontos = carbonoPontos;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -98,7 +103,7 @@ public class Produto  implements Serializable {
 	public void setItens(Set<ItemPedido> itens) {
 		this.itens = itens;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -123,6 +128,5 @@ public class Produto  implements Serializable {
 			return false;
 		return true;
 	}
-	
 
 }
