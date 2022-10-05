@@ -46,12 +46,13 @@ public class Produto implements Serializable {
 	public Produto() {
 	}
 
-	public Produto(Integer id, String nome, Double preco, Cliente vendedor) {
+	public Produto(Integer id, String nome, Double preco, Cliente vendedor, int pontos) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
 		this.vendedor = vendedor;
+		this.carbonoPontos = pontos;
 	}
 
 	@JsonIgnore

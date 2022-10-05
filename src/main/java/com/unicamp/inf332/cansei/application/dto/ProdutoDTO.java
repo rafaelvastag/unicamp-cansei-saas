@@ -11,6 +11,7 @@ public class ProdutoDTO implements Serializable {
 	private String nome;
 	private Double preco;
 	private String vendedor;
+	private int pontosCarbono;
 
 	public ProdutoDTO() {
 	}
@@ -25,7 +26,7 @@ public class ProdutoDTO implements Serializable {
 		} else {
 			this.vendedor = obj.getVendedor().getNome();
 		}
-
+		this.pontosCarbono = obj.getCarbonoPontos();
 	}
 
 	public Integer getId() {
@@ -50,6 +51,14 @@ public class ProdutoDTO implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public int getPontosCarbono() {
+		return pontosCarbono;
+	}
+
+	public void setPontosCarbono(int pontosCarbono) {
+		this.pontosCarbono = pontosCarbono;
 	}
 
 	public Double getPreco() {

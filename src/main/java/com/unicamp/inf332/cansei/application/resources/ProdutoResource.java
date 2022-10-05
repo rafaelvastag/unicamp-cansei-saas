@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unicamp.inf332.cansei.application.dto.ProdutoDTO;
+import com.unicamp.inf332.cansei.application.dto.ProdutoPontosCarbonoDTO;
 import com.unicamp.inf332.cansei.application.resources.utils.URL;
 import com.unicamp.inf332.cansei.application.services.ProdutoService;
 import com.unicamp.inf332.cansei.domain.entities.Produto;
@@ -27,6 +28,12 @@ public class ProdutoResource {
 	public ResponseEntity<Produto> find(@PathVariable Integer id) {
 		Produto obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
+	}
+
+	@RequestMapping(value = "/{id}/pontosdecarbono", method = RequestMethod.GET)
+	public ResponseEntity<ProdutoPontosCarbonoDTO> findPontosDeCarbonoByProdutoId(@PathVariable Integer id) {
+		Produto obj = service.findPontosDeCarbonoBy(id);
+		return ResponseEntity.ok().body(new ProdutoPontosCarbonoDTO(obj));
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
