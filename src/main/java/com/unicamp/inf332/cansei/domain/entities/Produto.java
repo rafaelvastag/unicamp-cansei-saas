@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,6 +27,11 @@ public class Produto implements Serializable {
 	private Integer id;
 	private String nome;
 	private Double preco;
+
+	@ManyToOne
+	@JoinColumn(name = "vendedor_id")
+	private Cliente vendedor;
+
 	private int carbonoPontos;
 
 	@JsonIgnore
@@ -40,11 +46,12 @@ public class Produto implements Serializable {
 	public Produto() {
 	}
 
-	public Produto(Integer id, String nome, Double preco) {
+	public Produto(Integer id, String nome, Double preco, Cliente vendedor) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
+		this.vendedor = vendedor;
 	}
 
 	@JsonIgnore
@@ -58,6 +65,14 @@ public class Produto implements Serializable {
 
 	public int getCarbonoPontos() {
 		return carbonoPontos;
+	}
+
+	public Cliente getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(Cliente vendedor) {
+		this.vendedor = vendedor;
 	}
 
 	public void setCarbonoPontos(int carbonoPontos) {

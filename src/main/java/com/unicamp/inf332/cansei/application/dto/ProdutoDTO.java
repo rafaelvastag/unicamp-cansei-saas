@@ -10,7 +10,8 @@ public class ProdutoDTO implements Serializable {
 	private Integer id;
 	private String nome;
 	private Double preco;
-	
+	private String vendedor;
+
 	public ProdutoDTO() {
 	}
 
@@ -18,8 +19,15 @@ public class ProdutoDTO implements Serializable {
 		id = obj.getId();
 		nome = obj.getNome();
 		preco = obj.getPreco();
+
+		if (obj.getVendedor() == null) {
+			this.vendedor = "Vendedor não informado";
+		} else {
+			this.vendedor = obj.getVendedor().getNome();
+		}
+
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -30,6 +38,14 @@ public class ProdutoDTO implements Serializable {
 
 	public String getNome() {
 		return nome;
+	}
+
+	public String getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(String vendedor) {
+		this.vendedor = vendedor;
 	}
 
 	public void setNome(String nome) {
