@@ -91,7 +91,7 @@ public class PedidoService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 
 		pedido.getPagamento().setEstado(EstadoPagamento.toEnum(status));
-
+		clienteService.updatePontos(pedido);
 		return repo.save(pedido);
 	}
 }

@@ -25,6 +25,7 @@ import com.unicamp.inf332.cansei.crosscutting.security.UserSS;
 import com.unicamp.inf332.cansei.domain.entities.Cidade;
 import com.unicamp.inf332.cansei.domain.entities.Cliente;
 import com.unicamp.inf332.cansei.domain.entities.Endereco;
+import com.unicamp.inf332.cansei.domain.entities.Pedido;
 import com.unicamp.inf332.cansei.domain.entities.enums.Perfil;
 import com.unicamp.inf332.cansei.domain.entities.enums.TipoCliente;
 import com.unicamp.inf332.cansei.domain.repositories.ClienteRepository;
@@ -167,5 +168,10 @@ public class ClienteService {
 		String fileName = prefix + user.getId() + ".jpg";
 
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
+	}
+
+	public void updatePontos(Pedido pedido) {
+		// TODO Auto-generated method stub
+		
 	}
 }
