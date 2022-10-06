@@ -33,7 +33,7 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Cansei SaaS API").description("Api do projeto de brecho Cansei")
+		return new ApiInfoBuilder().title("Cansei SaaS API").description("Api do projeto de brecho Cansei.")
 				.version("1.0").contact(contact()).build();
 	}
 
