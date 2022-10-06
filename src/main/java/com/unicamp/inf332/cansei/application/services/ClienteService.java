@@ -76,10 +76,10 @@ public class ClienteService {
 			throw new AuthorizationException("Acesso negado");
 		}
 
-		var pontos = obj.orElseThrow(() -> new ObjectNotFoundException(
+		var cliente = obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 
-		return pontos.getPontos();
+		return cliente.getPontos();
 
 	}
 
@@ -171,7 +171,10 @@ public class ClienteService {
 	}
 
 	public void updatePontos(Pedido pedido) {
-		// TODO Auto-generated method stub
-		
+		var cliente = repo.findById(pedido.getCliente().getId());
+		var cl = cliente.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + pedido.getCliente().getId() + ", Tipo: " + Cliente.class.getName()));
+		var pontosClienteTotal = cl.getPontos() + pedido.getValorTotalPontosCarbono() - pedido.getPontosUsados();
+		cl.setPontos(pontosClienteTotal);
 	}
 }
