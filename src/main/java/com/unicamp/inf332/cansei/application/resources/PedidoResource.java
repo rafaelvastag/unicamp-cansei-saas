@@ -1,6 +1,7 @@
 package com.unicamp.inf332.cansei.application.resources;
 
 import java.net.URI;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -31,9 +32,10 @@ public class PedidoResource {
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
-	public ResponseEntity<Pedido> atualizaStatusPagamento(@PathVariable Integer id, @RequestBody int status) {
-		Pedido obj = service.updatePagamentoStatus(id, status);
+	@RequestMapping(value = "/{id}/pagamento", method = RequestMethod.PATCH)
+	public ResponseEntity<Pedido> atualizaStatusPagamento(@PathVariable Integer id,
+			@RequestBody Map<String, String> status) {
+		Pedido obj = service.updatePagamentoStatus(id, Integer.valueOf(status.get("status")));
 		return ResponseEntity.ok().body(obj);
 	}
 
