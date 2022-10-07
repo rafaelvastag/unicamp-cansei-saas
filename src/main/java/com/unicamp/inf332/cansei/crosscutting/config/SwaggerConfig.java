@@ -15,6 +15,7 @@ import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.SecurityReference;
+import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -26,37 +27,49 @@ public class SwaggerConfig {
 
 	@Bean
 	public Docket docket() {
-		return new Docket(DocumentationType.SWAGGER_2).useDefaultResponseMessages(false).select()
-				.apis(RequestHandlerSelectors.basePackage("com.unicamp.inf332.equipe7.cansei"))
-				.paths(PathSelectors.any()).build().securityContexts(Arrays.asList(securityContext()))
-				.securitySchemes(Arrays.asList(apiKey())).apiInfo(apiInfo());
+		return new Docket(DocumentationType.SWAGGER_2)
+				.useDefaultResponseMessages(false)
+				.select()
+				.apis(RequestHandlerSelectors.basePackage("com.unicamp.inf332.cansei"))
+				.paths(PathSelectors.any())
+				.build()
+				.apiInfo(apiInfo())
+				.securityContexts(Arrays.asList(securityContext()))
+				.securitySchemes(securitySchemes());
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Cansei SaaS API").description("Api do projeto de brecho Cansei.")
-				.version("1.0").contact(contact()).build();
+		return new ApiInfoBuilder()
+				.title("Cansei SaaS API")
+				.description("Api do projeto de brecho Cansei.")
+				.version("1.0")
+				.contact(contact())
+				.build();
 	}
 
 	private Contact contact() {
 		return new Contact("Equipe 07", "", "casei@cansei-support.com");
 	}
 
-	public ApiKey apiKey() {
-		return new ApiKey("JWT", "Authorization", "header");
+	private SecurityContext securityContext() {
+		return SecurityContext.builder()
+				.securityReferences(defaultAuth())
+				.forPaths(PathSelectors.any())
+				.build();
 	}
 
-	private SecurityContext securityContext() {
-		return SecurityContext.builder().securityReferences(defaultAuth()).forPaths(PathSelectors.any()).build();
+	private List<SecurityScheme> securitySchemes() {
+		return Arrays.asList(new ApiKey("JWT", "Authorization", "header"));
 	}
 
 	private List<SecurityReference> defaultAuth() {
 		AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+
 		AuthorizationScope[] scopes = new AuthorizationScope[1];
 		scopes[0] = authorizationScope;
-		SecurityReference reference = new SecurityReference("JWT", scopes);
+
 		List<SecurityReference> auths = new ArrayList<>();
-		auths.add(reference);
+		auths.add(new SecurityReference("JWT", scopes));
 		return auths;
 	}
-
 }

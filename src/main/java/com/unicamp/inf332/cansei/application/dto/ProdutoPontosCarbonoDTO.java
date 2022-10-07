@@ -2,10 +2,17 @@ package com.unicamp.inf332.cansei.application.dto;
 
 import com.unicamp.inf332.cansei.domain.entities.Produto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value="ProdutoPontosCarbonoDTO", description="ProdutoPontosCarbono")
 public class ProdutoPontosCarbonoDTO {
 
+	@ApiModelProperty(value = "Identificação do produto.")
 	private Integer id;
+	@ApiModelProperty(value = "Nome do produto.")
 	private String nome;
+	@ApiModelProperty(value = "Pontos de carbono.")
 	private int pontosCarbono;
 
 	public ProdutoPontosCarbonoDTO() {

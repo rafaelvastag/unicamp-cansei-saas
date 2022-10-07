@@ -1,8 +1,6 @@
 package com.unicamp.inf332.cansei.application.resources;
 
 import java.net.URI;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -22,58 +20,71 @@ import com.unicamp.inf332.cansei.application.dto.CategoriaDTO;
 import com.unicamp.inf332.cansei.application.services.CategoriaService;
 import com.unicamp.inf332.cansei.domain.entities.Categoria;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
+@Api(tags="Categorias")
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
 	
 	@Autowired
 	private CategoriaService service;
-	
+
+	@ApiOperation(value = "Buscar categoria por ID.", httpMethod = "GET")
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
+	public ResponseEntity<Categoria> find(
+			@PathVariable @ApiParam(name="id", value="ID da categoria.", required=true) Integer id
+	) {
 		Categoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
+	@ApiOperation(value = "Cadastrar nova categoria.", httpMethod = "POST")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
+	public ResponseEntity<Void> insert(
+			@Valid @RequestBody @ApiParam(name="categoria", value="Informações da categoria a ser cadastrada.", required=true) CategoriaDTO objDto
+	) {
 		Categoria obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 			.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
+
+	@ApiOperation(value = "Atualizar categoria por ID.", httpMethod = "PUT")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(
+			@Valid @RequestBody @ApiParam(name="categoria", value="Informações da categoria a ser atualizada.", required=true) CategoriaDTO objDto,
+			@PathVariable @ApiParam(name="id", value="ID da categoria.", required=true) Integer id
+	) {
 		Categoria obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
-	
+
+	@ApiOperation(value = "Remover categoria por ID.", httpMethod = "DELETE")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+	public ResponseEntity<Void> delete(
+			@PathVariable  @ApiParam(name="id", value="ID da categoria.", required=true) Integer id
+	) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
+	@ApiOperation(value = "Listar categorias por critério.")
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<CategoriaDTO>> findAll() {
-		List<Categoria> list = service.findAll();
-		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());  
-		return ResponseEntity.ok().body(listDto);
-	}
-	
-	@RequestMapping(value="/page", method=RequestMethod.GET)
 	public ResponseEntity<Page<CategoriaDTO>> findPage(
-			@RequestParam(value="page", defaultValue="0") Integer page, 
-			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
-			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
-			@RequestParam(value="direction", defaultValue="ASC") String direction) {
+			@RequestParam(value = "page", defaultValue = "0")           @ApiParam(name="page", value="Página (para paginação). Valor padrão = 0.", required = false, defaultValue="0") Integer page,
+			@RequestParam(value = "linesPerPage", defaultValue = "24")  @ApiParam(name="linesPerPage", value="Limite da pagina. Valor padrão = 24.", required = false) Integer linesPerPage,
+			@RequestParam(value = "orderBy", defaultValue = "nome")     @ApiParam(name="orderBy", value="Critério de ordenação dos produtos. Valor padrão='nome'.", required=false) String orderBy,
+			@RequestParam(value = "direction", defaultValue = "ASC")    @ApiParam(name="direction", value="Direção de ordenação dos produtos. Valor padrão='ASC'.", required=false) String direction
+	) {
 		Page<Categoria> list = service.findPage(page, linesPerPage, orderBy, direction);
 		Page<CategoriaDTO> listDto = list.map(obj -> new CategoriaDTO(obj));  
 		return ResponseEntity.ok().body(listDto);

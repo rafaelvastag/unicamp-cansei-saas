@@ -4,13 +4,22 @@ import java.io.Serializable;
 
 import com.unicamp.inf332.cansei.domain.entities.Produto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value="ProdutoDTO", description="Produto")
 public class ProdutoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@ApiModelProperty(value = "Identificação do produto.")
 	private Integer id;
+	@ApiModelProperty(value = "Nome do produto.")
 	private String nome;
+	@ApiModelProperty(value = "Valor do produto em BRL.")
 	private Double preco;
+	@ApiModelProperty(value = "Vendedor do produto.")
 	private String vendedor;
+	@ApiModelProperty(value = "Pontos de carbono.")
 	private int pontosCarbono;
 
 	public ProdutoDTO() {

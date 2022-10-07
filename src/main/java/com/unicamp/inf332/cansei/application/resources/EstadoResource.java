@@ -17,6 +17,11 @@ import com.unicamp.inf332.cansei.application.services.EstadoService;
 import com.unicamp.inf332.cansei.domain.entities.Cidade;
 import com.unicamp.inf332.cansei.domain.entities.Estado;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
+@Api(tags="Estados")
 @RestController
 @RequestMapping(value="/estados")
 public class EstadoResource {
@@ -26,16 +31,18 @@ public class EstadoResource {
 	
 	@Autowired
 	private CidadeService cidadeService;
-	
+
+	@ApiOperation(value = "Listar todas as entidades federativas.")
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<EstadoDTO>> findAll() {
 		List<Estado> list = service.findAll();
 		List<EstadoDTO> listDto = list.stream().map(obj -> new EstadoDTO(obj)).collect(Collectors.toList());  
 		return ResponseEntity.ok().body(listDto);
 	}
-	
+
+	@ApiOperation(value = "Listar todas as cidades de uma entidade federativa.")
 	@RequestMapping(value="/{estadoId}/cidades", method=RequestMethod.GET)
-	public ResponseEntity<List<CidadeDTO>> findCidades(@PathVariable Integer estadoId) {
+	public ResponseEntity<List<CidadeDTO>> findCidades(@PathVariable @ApiParam(name="estadoId", value="ID do estado que deseja listar as cidades.", required=true) Integer estadoId) {
 		List<Cidade> list = cidadeService.findByEstado(estadoId);
 		List<CidadeDTO> listDto = list.stream().map(obj -> new CidadeDTO(obj)).collect(Collectors.toList());  
 		return ResponseEntity.ok().body(listDto);

@@ -9,48 +9,67 @@ import org.hibernate.validator.constraints.Length;
 
 import com.unicamp.inf332.cansei.application.services.validation.ClienteInsert;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value="ClienteNewDTO", description="Cadastro de novo cliente.")
 @ClienteInsert
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@ApiModelProperty(value = "Nome do cliente.", allowEmptyValue = false)
 	@NotEmpty(message = "Preenchimento obrigatório")
 	@Length(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
 
+	@ApiModelProperty(value = "E-mail do cliente.", allowEmptyValue = false)
 	@NotEmpty(message = "Preenchimento obrigatório")
 	@Email(message = "Email inválido")
 	private String email;
 
+	@ApiModelProperty(value = "CPF ou CNPJ do cliente.", allowEmptyValue = false)
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cpfOuCnpj;
 
+	@ApiModelProperty(value = "Tipo do cliente.")
 	private Integer tipo;
 
+	@ApiModelProperty(value = "Senha.", allowEmptyValue = false)
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String senha;
 
+	@ApiModelProperty(value = "Logradouro do cliente.", allowEmptyValue = false)
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String logradouro;
 
+	@ApiModelProperty(value = "Número do cliente.", allowEmptyValue = false)
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String numero;
 
+	@ApiModelProperty(value = "Complemento do cliente.")
 	private String complemento;
 
+	@ApiModelProperty(value = "Bairro do cliente.")
 	private String bairro;
 
+	@ApiModelProperty(value = "Cep do cliente.", allowEmptyValue = false)
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cep;
 
+	@ApiModelProperty(value = "Telefone 1 de contato do cliente.", allowEmptyValue = false)
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String telefone1;
 
+	@ApiModelProperty(value = "Telefone 2 de contato do cliente.")
 	private String telefone2;
 
+	@ApiModelProperty(value = "Telefone 3 de contato do cliente.")
 	private String telefone3;
 
+	@ApiModelProperty(value = "ID da cidade do cliente.")
 	private Integer cidadeId;
 
+	@ApiModelProperty(value = "Pontos do cliente.")
 	private int pontos;
 
 	public ClienteNewDTO() {

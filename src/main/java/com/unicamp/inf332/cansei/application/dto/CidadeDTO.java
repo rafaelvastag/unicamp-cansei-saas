@@ -3,10 +3,16 @@ import java.io.Serializable;
 
 import com.unicamp.inf332.cansei.domain.entities.Cidade;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value="CidadeDTO", description="Cidade")
 public class CidadeDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@ApiModelProperty(value = "Identificação da cidade.")
 	private Integer id;
+	@ApiModelProperty(value = "Nome da cidade.")
 	private String nome;
 	
 	public CidadeDTO() {

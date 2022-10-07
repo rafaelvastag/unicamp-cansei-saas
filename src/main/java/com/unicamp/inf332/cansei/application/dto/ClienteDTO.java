@@ -9,16 +9,23 @@ import org.hibernate.validator.constraints.Length;
 import com.unicamp.inf332.cansei.application.services.validation.ClienteUpdate;
 import com.unicamp.inf332.cansei.domain.entities.Cliente;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value="ClienteDTO", description="Cliente")
 @ClienteUpdate
 public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@ApiModelProperty(value = "Identificação do cliente.")
 	private Integer id;
 	
+	@ApiModelProperty(value = "Nome do cliente.")
 	@NotEmpty(message="Preenchimento obrigatório")
 	@Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
-	
+
+	@ApiModelProperty(value = "E-mail do cliente.")
 	@NotEmpty(message="Preenchimento obrigatório")
 	@Email(message="Email inválido")
 	private String email;
