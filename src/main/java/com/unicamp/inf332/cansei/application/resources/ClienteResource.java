@@ -37,7 +37,7 @@ public class ClienteResource {
 	@ApiOperation(value = "Buscar cliente por ID.", httpMethod = "GET")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Cliente> find(
-			@PathVariable @ApiParam(name="id", value="ID do cliente.", required=true) Integer id
+			@PathVariable @ApiParam(name="id", value="ID do cliente.", required=true, example = "1") Integer id
 	) {
 		Cliente obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
@@ -46,7 +46,7 @@ public class ClienteResource {
 	@ApiOperation(value = "Buscar pontos de carbono do cliente por ID.", httpMethod = "GET")
 	@RequestMapping(value = "/{id}/pontosdecarbono", method = RequestMethod.GET)
 	public ResponseEntity<Integer> getPontosDeCarbono(
-			@PathVariable @ApiParam(name="id", value="ID do cliente.", required=true) Integer id
+			@PathVariable @ApiParam(name="id", value="ID do cliente.", required=true, example = "1") Integer id
 	) {
 		var obj = service.findPontosDeCarbonoBy(id);
 		return ResponseEntity.ok().body(obj);
@@ -76,7 +76,7 @@ public class ClienteResource {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(
 			@Valid @RequestBody @ApiParam(name="cliente", value="Informações do cliente ser atualizado.", required=true) ClienteDTO objDto,
-			@PathVariable @ApiParam(name="id", value="ID do cliente.", required=true) Integer id
+			@PathVariable @ApiParam(name="id", value="ID do cliente.", required=true, example = "1") Integer id
 	) {
 		Cliente obj = service.fromDTO(objDto);
 		obj.setId(id);
@@ -88,7 +88,7 @@ public class ClienteResource {
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(
-			@PathVariable @ApiParam(name="id", value="ID do cliente.", required=true) Integer id
+			@PathVariable @ApiParam(name="id", value="ID do cliente.", required=true, example = "1") Integer id
 	) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
@@ -98,8 +98,8 @@ public class ClienteResource {
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<ClienteDTO>> findPage(
-			@RequestParam(value = "page", defaultValue = "0")           @ApiParam(name="page", value="Página (para paginação). Valor padrão = 0.", required = false, defaultValue="0") Integer page,
-			@RequestParam(value = "linesPerPage", defaultValue = "24")  @ApiParam(name="linesPerPage", value="Limite da pagina. Valor padrão = 24.", required = false) Integer linesPerPage,
+			@RequestParam(value = "page", defaultValue = "0")           @ApiParam(name="page", value="Página (para paginação). Valor padrão = 0.", required = false, defaultValue="0", example = "0") Integer page,
+			@RequestParam(value = "linesPerPage", defaultValue = "24")  @ApiParam(name="linesPerPage", value="Limite da pagina. Valor padrão = 24.", required = false, defaultValue="24", example = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "nome")     @ApiParam(name="orderBy", value="Critério de ordenação dos produtos. Valor padrão='nome'.", required=false) String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC")    @ApiParam(name="direction", value="Direção de ordenação dos produtos. Valor padrão='ASC'.", required=false) String direction
 	) {

@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value="ProdutoPontosCarbonoDTO", description="ProdutoPontosCarbono")
 public class ProdutoPontosCarbonoDTO {
 
-	@ApiModelProperty(value = "Identificação do produto.")
+	@ApiModelProperty(value = "Identificação do produto.", example="1")
 	private Integer id;
 	@ApiModelProperty(value = "Nome do produto.")
 	private String nome;

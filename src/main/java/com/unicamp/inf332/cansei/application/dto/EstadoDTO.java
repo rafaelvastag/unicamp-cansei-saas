@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class EstadoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@ApiModelProperty(value = "Identificação do estado.")
+	@ApiModelProperty(value = "Identificação do estado.", example="1")
 	private Integer id;
 	@ApiModelProperty(value = "Nome do estado.")
 	private String nome;

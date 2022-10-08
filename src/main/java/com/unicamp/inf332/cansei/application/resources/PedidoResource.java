@@ -33,7 +33,7 @@ public class PedidoResource {
 
 	@ApiOperation(value = "Buscar pedido por ID.")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Pedido> find(@PathVariable @ApiParam(name="id", value="ID do pedido.", required=true) Integer id) {
+	public ResponseEntity<Pedido> find(@PathVariable @ApiParam(name="id", value="ID do pedido.", required=true, example = "1") Integer id) {
 		Pedido obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -41,7 +41,7 @@ public class PedidoResource {
 	@ApiOperation(value = "Atualizar status do pagamento do pedido por ID.")
 	@RequestMapping(value = "/{id}/pagamento", method = RequestMethod.PATCH)
 	public ResponseEntity<Pedido> atualizaStatusPagamento(
-			@PathVariable @ApiParam(name="id", value="ID do pedido.", required=true) Integer id,
+			@PathVariable @ApiParam(name="id", value="ID do pedido.", required=true, example = "1") Integer id,
 			@RequestBody  @ApiParam(name="status", value="Status do pagamento do pedido.", required=true) Map<String, String> status
 	) {
 		Pedido obj = service.updatePagamentoStatus(id, Integer.valueOf(status.get("status")));
@@ -59,8 +59,8 @@ public class PedidoResource {
 	@ApiOperation(value = "Listar pedidos por critério.")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Pedido>> findPage(
-			@RequestParam(value = "page", defaultValue = "0")           @ApiParam(name="page", value="Página (para paginação). Valor padrão = 0.", required = false, defaultValue="0") Integer page,
-			@RequestParam(value = "linesPerPage", defaultValue = "24")  @ApiParam(name="linesPerPage", value="Limite da pagina. Valor padrão = 24.", required = false) Integer linesPerPage,
+			@RequestParam(value = "page", defaultValue = "0")           @ApiParam(name="page", value="Página (para paginação). Valor padrão = 0.", required = false, defaultValue="0", example = "0") Integer page,
+			@RequestParam(value = "linesPerPage", defaultValue = "24")  @ApiParam(name="linesPerPage", value="Limite da pagina. Valor padrão = 24.", required = false, defaultValue="24", example = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "instante") @ApiParam(name="orderBy", value="Critério de ordenação dos produtos. Valor padrão='instante'.", required=false) String orderBy,
 			@RequestParam(value = "direction", defaultValue = "DESC")   @ApiParam(name="direction", value="Direção de ordenação dos produtos. Valor padrão='DESC'.", required=false) String direction
 	) {

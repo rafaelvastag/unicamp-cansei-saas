@@ -31,7 +31,7 @@ public class ClienteNewDTO implements Serializable {
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cpfOuCnpj;
 
-	@ApiModelProperty(value = "Tipo do cliente.")
+	@ApiModelProperty(value = "Tipo do cliente.", example="1")
 	private Integer tipo;
 
 	@ApiModelProperty(value = "Senha.", allowEmptyValue = false)
@@ -66,7 +66,7 @@ public class ClienteNewDTO implements Serializable {
 	@ApiModelProperty(value = "Telefone 3 de contato do cliente.")
 	private String telefone3;
 
-	@ApiModelProperty(value = "ID da cidade do cliente.")
+	@ApiModelProperty(value = "ID da cidade do cliente.", example="1")
 	private Integer cidadeId;
 
 	@ApiModelProperty(value = "Pontos do cliente.")

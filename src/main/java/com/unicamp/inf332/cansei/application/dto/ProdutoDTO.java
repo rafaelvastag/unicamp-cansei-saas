@@ -11,15 +11,15 @@ import io.swagger.annotations.ApiModelProperty;
 public class ProdutoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@ApiModelProperty(value = "Identificação do produto.")
+	@ApiModelProperty(value = "Identificação do produto.", example="1")
 	private Integer id;
 	@ApiModelProperty(value = "Nome do produto.")
 	private String nome;
-	@ApiModelProperty(value = "Valor do produto em BRL.")
+	@ApiModelProperty(value = "Valor do produto em BRL.", example="123.45")
 	private Double preco;
 	@ApiModelProperty(value = "Vendedor do produto.")
 	private String vendedor;
-	@ApiModelProperty(value = "Pontos de carbono.")
+	@ApiModelProperty(value = "Pontos de carbono.", example="100")
 	private int pontosCarbono;
 
 	public ProdutoDTO() {

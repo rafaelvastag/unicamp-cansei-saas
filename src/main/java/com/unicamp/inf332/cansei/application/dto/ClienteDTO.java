@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@ApiModelProperty(value = "Identificação do cliente.")
+	@ApiModelProperty(value = "Identificação do cliente.", example="1")
 	private Integer id;
 	
 	@ApiModelProperty(value = "Nome do cliente.")

@@ -28,7 +28,7 @@ public class SwaggerConfig {
 	@Bean
 	public Docket docket() {
 		return new Docket(DocumentationType.SWAGGER_2)
-				.useDefaultResponseMessages(false)
+				.useDefaultResponseMessages(true)
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("com.unicamp.inf332.cansei"))
 				.paths(PathSelectors.any())

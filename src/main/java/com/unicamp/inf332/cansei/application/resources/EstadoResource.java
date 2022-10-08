@@ -42,7 +42,9 @@ public class EstadoResource {
 
 	@ApiOperation(value = "Listar todas as cidades de uma entidade federativa.")
 	@RequestMapping(value="/{estadoId}/cidades", method=RequestMethod.GET)
-	public ResponseEntity<List<CidadeDTO>> findCidades(@PathVariable @ApiParam(name="estadoId", value="ID do estado que deseja listar as cidades.", required=true) Integer estadoId) {
+	public ResponseEntity<List<CidadeDTO>> findCidades(
+			@PathVariable @ApiParam(name="estadoId", value="ID do estado que deseja listar as cidades.", required=true, example = "1") Integer estadoId
+	) {
 		List<Cidade> list = cidadeService.findByEstado(estadoId);
 		List<CidadeDTO> listDto = list.stream().map(obj -> new CidadeDTO(obj)).collect(Collectors.toList());  
 		return ResponseEntity.ok().body(listDto);

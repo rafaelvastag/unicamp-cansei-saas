@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class CategoriaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@ApiModelProperty(value = "Identificação da categoria.")
+	@ApiModelProperty(value = "Identificação da categoria.", example="1")
 	private Integer id;
 
 	@ApiModelProperty(value = "Nome da categoria.")
