@@ -1,12 +1,14 @@
 package com.unicamp.inf332.cansei.application.services;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.unicamp.inf332.cansei.domain.entities.Categoria;
 import com.unicamp.inf332.cansei.domain.entities.Cidade;
@@ -56,7 +58,10 @@ public class DBService {
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 
-	public void instantiateTestDatabase() throws ParseException {
+	private int contador = 0;
+
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+	public void instantiateTestDatabase() throws Exception {
 
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "São Paulo");
@@ -71,12 +76,12 @@ public class DBService {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-		Cliente cli1 = new Cliente(null, "INF332 Equipe07 Cliente", "cansei@gmail.com", "36378912377",
+		Cliente cli1 = new Cliente(null, "INF332 Equipe07 Cliente", "cansei.user@gmail.com", "36378912377",
 				TipoCliente.PESSOAFISICA, pe.encode("123"), 1000);
 
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
-		Cliente cli2 = new Cliente(null, "Equipe7 Admin", "cansei.unicamp@gmail.com", "31628382740",
+		Cliente cli2 = new Cliente(null, "Equipe7 Admin", "cansei.admin@gmail.com", "31628382740",
 				TipoCliente.PESSOAFISICA, pe.encode("123"), 110);
 		cli2.getTelefones().addAll(Arrays.asList("93883321", "34252625"));
 		cli2.addPerfil(Perfil.ADMIN);
@@ -216,12 +221,24 @@ public class DBService {
 		p10.getCategorias().addAll(Arrays.asList(cat6));
 		p11.getCategorias().addAll(Arrays.asList(cat7));
 
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
-		produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
+		List<Categoria> categorias = Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7);
+		categorias.forEach(c -> categoriaRepository.save(c));
 
-		produtoRepository.saveAll(Arrays.asList(p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25,
+		List<Produto> produtos = Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
+		produtos.stream().forEach(p -> produtoRepository.save(p));
+
+		List<Produto> produtos2 = Arrays.asList(p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25,
 				p26, p27, p28, p29, p30, p31, p32, p33, p34, p35, p36, p37, p38, p39, p40, p41, p42, p43, p44, p45, p46,
-				p47, p48, p49, p50));
+				p47, p48, p49, p50);
+
+		produtos2.stream().forEach(p -> {
+			produtoRepository.save(p);
+			contador++;
+
+			if (contador == 20) {
+				throw new RuntimeException();
+			}
+		});
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 

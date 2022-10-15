@@ -1,7 +1,5 @@
 package com.unicamp.inf332.cansei.crosscutting.config;
 
-import java.text.ParseException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +21,7 @@ public class DevConfig {
 	private String strategy;
 
 	@Bean
-	public boolean instantiateDatabase() throws ParseException {
+	public boolean instantiateDatabase() throws Exception {
 
 		if (!"create".equals(strategy)) {
 			return false;

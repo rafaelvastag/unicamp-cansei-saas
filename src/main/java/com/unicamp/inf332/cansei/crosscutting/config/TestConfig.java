@@ -1,7 +1,5 @@
 package com.unicamp.inf332.cansei.crosscutting.config;
 
-import java.text.ParseException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +17,12 @@ public class TestConfig {
 	private DBService dbService;
 
 	@Bean
-	public boolean instantiateDatabase() throws ParseException {
-		dbService.instantiateTestDatabase();
+	public boolean instantiateDatabase() {
+		try {
+			dbService.instantiateTestDatabase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return true;
 	}
 
