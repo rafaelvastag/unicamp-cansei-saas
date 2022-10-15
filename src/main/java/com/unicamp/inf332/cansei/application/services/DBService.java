@@ -60,6 +60,12 @@ public class DBService {
 
 	private int contador = 0;
 
+	public void addEstadoTeste() {
+		Estado est2 = new Estado(null, "Estado teste 1");
+		Estado est3 = new Estado(null, "Estado Teste 2");
+		estadoRepository.saveAll(Arrays.asList(est3, est2));
+	}
+
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 	public void instantiateTestDatabase() throws Exception {
 
@@ -73,8 +79,7 @@ public class DBService {
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2, c3));
 
-		estadoRepository.saveAll(Arrays.asList(est1, est2));
-		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		saveEstadoCidade(est1, est2, c1, c2, c3);
 
 		Cliente cli1 = new Cliente(null, "INF332 Equipe07 Cliente", "cansei.user@gmail.com", "36378912377",
 				TipoCliente.PESSOAFISICA, pe.encode("123"), 1000);
@@ -222,7 +227,10 @@ public class DBService {
 		p11.getCategorias().addAll(Arrays.asList(cat7));
 
 		List<Categoria> categorias = Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7);
-		categorias.forEach(c -> categoriaRepository.save(c));
+		categorias.forEach(c -> {
+			Categoria cat = categoriaRepository.save(c);
+			System.out.println(cat.toString());
+		});
 
 		List<Produto> produtos = Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
 		produtos.stream().forEach(p -> produtoRepository.save(p));
@@ -234,10 +242,10 @@ public class DBService {
 		produtos2.stream().forEach(p -> {
 			produtoRepository.save(p);
 			contador++;
-
 			if (contador == 20) {
 				throw new RuntimeException();
 			}
+
 		});
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -269,5 +277,11 @@ public class DBService {
 		p3.getItens().addAll(Arrays.asList(ip2));
 
 		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+	}
+
+	@Transactional(noRollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+	private void saveEstadoCidade(Estado est1, Estado est2, Cidade c1, Cidade c2, Cidade c3) {
+		estadoRepository.saveAll(Arrays.asList(est1, est2));
+		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 	}
 }

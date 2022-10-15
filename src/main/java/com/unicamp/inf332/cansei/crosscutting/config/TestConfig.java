@@ -19,7 +19,9 @@ public class TestConfig {
 	@Bean
 	public boolean instantiateDatabase() {
 		try {
+			dbService.addEstadoTeste();
 			dbService.instantiateTestDatabase();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
